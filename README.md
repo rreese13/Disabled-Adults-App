@@ -10,7 +10,7 @@
 ##### Class: id (serial pk), class_name (varchar 100 not null), instructor_name (varchar 100), schedule (varchar 100), location (varchar 150), description (text), created_at (timestamp default current_timestamp).
 
 #### ERD
-
+![ERD](ERD.png)
 
 #### How to run locally
 ##### Download app.py, use secret in streamlit app
