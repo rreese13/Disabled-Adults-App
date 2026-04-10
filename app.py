@@ -311,3 +311,4 @@ import streamlit as st
 DB_URL = st.secrets["database"]["DB_URL"]
 print(DB_URL)  # should print your database URL
 
+st.write(fetch_all("adults"))
