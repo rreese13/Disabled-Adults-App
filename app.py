@@ -231,7 +231,7 @@ def management_page(table, display_columns, add_columns, title):
             else:
                 add_row(table, new_data)
                 st.success(f"{title[:-1]} added successfully!")
-                st.experimental_rerun()
+                st.rerun()
 
     # Display filtered table with Edit/Delete
     st.subheader(f"Existing {title}")
@@ -261,7 +261,7 @@ def management_page(table, display_columns, add_columns, title):
             update_row(table, edit_id, edited_data)
             st.success("Updated successfully!")
             del st.session_state['edit_id']
-            st.experimental_rerun()
+            st.rerun()
 
     # Delete confirmation
     if 'delete_id' in st.session_state:
@@ -271,7 +271,7 @@ def management_page(table, display_columns, add_columns, title):
             delete_row(table, delete_id)
             st.success("Deleted successfully!")
             del st.session_state['delete_id']
-            st.experimental_rerun()
+            st.rerun()
         if st.button("Cancel"):
             del st.session_state['delete_id']
 
