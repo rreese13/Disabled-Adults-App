@@ -211,7 +211,7 @@ def management_page(table, display_columns, add_columns, title):
 
     # Add new record form
     with st.form(f"add_{table}"):
-    st.subheader(f"Add New {title[:-1]}")
+        st.subheader(f"Add New {title[:-1]}")
     new_data = {}
 
     for col in add_columns:
