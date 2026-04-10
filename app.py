@@ -224,7 +224,7 @@ def management_page(table, display_columns, add_columns, title):
                 new_data[col] = st.text_input(col)
         submitted = st.form_submit_button("Add")
         if submitted:
-            errors = [col for col in add_columns[:3] if not str(new_data[col]).strip()]  # first 3 required
+            errors = [col for col in add_columns if not str(new_data[col]).strip()]  # first 3 required
             if errors:
                 for err in errors:
                     st.error(f"{err} is required.")
