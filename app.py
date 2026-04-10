@@ -316,7 +316,7 @@ from datetime import date
 import streamlit as st
 
 with st.form("add_adults"):
-    st.subheader(f"Add New {title[:-1]}")
+    st.subheader("adults")
     
     new_data = {}
 
