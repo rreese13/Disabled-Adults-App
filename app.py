@@ -155,12 +155,20 @@ def update_row(table, row_id, data):
     conn.close()
 
 def add_row(table, data):
+    st.write("INSERTING:", data)
+
     conn = get_connection()
     cur = conn.cursor()
+
     columns = ", ".join(data.keys())
     placeholders = ", ".join(["%s"] * len(data))
     values = list(data.values())
-    cur.execute(f"INSERT INTO {table} ({columns}) VALUES ({placeholders})", values)
+
+    cur.execute(
+        f"INSERT INTO {table} ({columns}) VALUES ({placeholders})",
+        values
+    )
+
     conn.commit()
     cur.close()
     conn.close()
