@@ -313,60 +313,16 @@ DB_URL = st.secrets["database"]["DB_URL"]
 print(DB_URL)  # should print your database URL
 
 from datetime import date
-import streamlit as st
 
-with st.form("add_adults"):
-    st.subheader("adults")
-    
-    new_data = {}
-
-    for col in add_columns:
-
-        # 🟡 DATE HANDLING
-        if "date" in col.lower():
-
-            # 👇 SPECIAL CASE: DATE OF BIRTH
-            if "dob" in col.lower() or "birth" in col.lower():
-
-                today = date.today()
-                adult_max = date(today.year - 18, today.month, today.day)
-
-                new_data[col] = st.date_input(
-                    col,
-                    min_value=date(1900, 1, 1),
-                    max_value=adult_max,   # ensures 18+
-                    value=date(2000, 1, 1)
-                )
-
-            # 👇 OTHER DATE FIELDS
-            else:
-                new_data[col] = st.date_input(
-                    col,
-                    max_value=date.today()
-                )
-
-        # 🟢 TEXT HANDLING
-        else:
-            new_data[col] = st.text_input(col)
-
-    submitted = st.form_submit_button("Add")
-
-    if submitted:
-
-        # ❗ VALIDATE ALL FIELDS REQUIRED
-        errors = [
-            col for col in add_columns
-            if (
-                new_data[col] is None or
-                (isinstance(new_data[col], str) and not new_data[col].strip())
+for col in add_columns:
+    if "date" in col.lower():
+        if "dob" in col.lower():  # special case for DOB
+            new_data[col] = st.date_input(
+                col,
+                min_value=date(1900, 1, 1),
+                max_value=date.today()
             )
-        ]
-
-        if errors:
-            st.error(f"Please fill out all fields: {', '.join(errors)}")
-
         else:
-            add_row(table, new_data)
-            st.success(f"{title[:-1]} added successfully!")
-            st.rerun()
-
+            new_data[col] = st.date_input(col)
+    else:
+        new_data[col] = st.text_input(col)
