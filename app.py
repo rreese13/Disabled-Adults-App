@@ -35,13 +35,7 @@ def delete_row(table, row_id):
 conn = get_connection()
 cur = conn.cursor()
 
-# Drop tables if they exist to ensure schema is always up-to-date
-# Drop dependent tables first
-cur.execute("DROP TABLE IF EXISTS attendance;")
-cur.execute("DROP TABLE IF EXISTS adult_intern;")
-cur.execute("DROP TABLE IF EXISTS class;")
-cur.execute("DROP TABLE IF EXISTS internship;")
-cur.execute("DROP TABLE IF EXISTS adults CASCADE;") # Use CASCADE to drop dependent objects too
+
 
 # 1. Adults table
 cur.execute("""
@@ -121,9 +115,6 @@ conn.close()
 
 print("✅ All 5 tables created successfully!")
 
-import streamlit as st
-import psycopg2
-import pandas as pd
 
 def get_connection():
     return psycopg2.connect(DB_URL)
