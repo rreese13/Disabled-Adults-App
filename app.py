@@ -236,17 +236,20 @@ def management_page(table, display_columns, add_columns, title):
 
     # Display filtered table with Edit/Delete
     st.subheader(f"Existing {title}")
-    for _, row in filtered_df.iterrows():
-        cols = st.columns([3,1,1])
-        with cols[0]:
-            st.write({col: row[col] for col in display_columns})
-        with cols[1]:
-            if st.button("Edit", key=f"edit_{table}_{row['id']}"):
-                st.session_state['edit_id'] = row['id']
-        with cols[2]:
-            if st.button("Delete", key=f"delete_{table}_{row['id']}"):
-                st.session_state['delete_id'] = row['id']
-
+    if filtered_df.empty:
+        st.info("No records found")
+    else:
+        st.dataframe(filtered_df[display_columns], use_container_width=True)
+        for _, row in filtered_df.iterrows():
+            cols = st.columns([3, 1, 1])
+            with cols[0]:
+                st.write(f"ID: {row['id']}")
+            with cols[1]:
+                if st.button("Edit", key=f"edit_{table}_{row['id']}"):
+                    st.session_state['edit_id'] = row['id']
+            with cols[2]:
+                if st.button("Delete", key=f"delete_{table}_{row['id']}"):
+                    st.session_state['delete_id'] = row['id']
     # Edit form
     if 'edit_id' in st.session_state:
         edit_id = st.session_state['edit_id']
