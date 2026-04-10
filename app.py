@@ -212,29 +212,22 @@ def management_page(table, display_columns, add_columns, title):
     # Add new record form
     with st.form(f"add_{table}"):
         st.subheader(f"Add New {title[:-1]}")
-    new_data = {}
-
-    for col in add_columns:
-        if "date" in col.lower():
-            new_data[col] = st.date_input(
-                col,
-                min_value=date(1900, 1, 1),
-                max_value=date.today(),
-                value=date(2000, 1, 1)
-            )
-        else:
-            new_data[col] = st.text_input(col)
-
-    submitted = st.form_submit_button("Add")
-
-    if submitted:
-        errors = [
-            col for col in add_columns
-            if (
-                new_data[col] is None or
-                (isinstance(new_data[col], str) and not new_data[col].strip())
-            )
-        ]
+        new_data = {}
+        for col in add_columns:
+            if "date" in col.lower():
+                new_data[col] = st.date_input(col)
+            else:
+                new_data[col] = st.text_input(col)
+        submitted = st.form_submit_button("Add")
+        if submitted:
+            errors = [col for col in add_columns[:3] if not str(new_data[col]).strip()]  # first 3 required
+            if errors:
+                for err in errors:
+                    st.error(f"{err} is required.")
+            else:
+                add_row(table, new_data)
+                st.success(f"{title[:-1]} added successfully!")
+                st.experimental_rerun()
 
     # Display filtered table with Edit/Delete
     st.subheader(f"Existing {title}")
@@ -312,5 +305,4 @@ import streamlit as st
 
 DB_URL = st.secrets["database"]["DB_URL"]
 print(DB_URL)  # should print your database URL
-
 
