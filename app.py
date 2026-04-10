@@ -313,17 +313,4 @@ import streamlit as st
 DB_URL = st.secrets["database"]["DB_URL"]
 print(DB_URL)  # should print your database URL
 
-from datetime import date
 
-for col in add_columns:
-    if "date" in col.lower():
-        if "dob" in col.lower():  # special case for DOB
-            new_data[col] = st.date_input(
-                col,
-                min_value=date(1900, 1, 1),
-                max_value=date.today()
-            )
-        else:
-            new_data[col] = st.date_input(col)
-    else:
-        new_data[col] = st.text_input(col)
