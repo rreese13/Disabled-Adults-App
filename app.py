@@ -1,5 +1,5 @@
 
-
+from datetime import date
 import streamlit as st
 import psycopg2
 import pandas as pd
@@ -215,7 +215,11 @@ def management_page(table, display_columns, add_columns, title):
         new_data = {}
         for col in add_columns:
             if "date" in col.lower():
-                new_data[col] = st.date_input(col)
+                new_data[col] = st.date_input(
+                    col,
+                    min_value=date(1900, 1, 1),
+                    max_value=date.today(),
+                    value=date(2000, 1, 1))
             else:
                 new_data[col] = st.text_input(col)
         submitted = st.form_submit_button("Add")
