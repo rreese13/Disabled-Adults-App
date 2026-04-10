@@ -236,14 +236,6 @@ def management_page(table, display_columns, add_columns, title):
             )
         ]
 
-            if errors:
-                for err in errors:
-                    st.error(f"{err} is required.")
-            else:
-                add_row(table, new_data)
-                st.success(f"{title[:-1]} added successfully!")
-                st.experimental_rerun()
-
     # Display filtered table with Edit/Delete
     st.subheader(f"Existing {title}")
     for _, row in filtered_df.iterrows():
