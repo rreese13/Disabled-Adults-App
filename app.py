@@ -315,7 +315,7 @@ print(DB_URL)  # should print your database URL
 from datetime import date
 import streamlit as st
 
-with st.form(f"add_{table}"):
+with st.form("add_adults"):
     st.subheader(f"Add New {title[:-1]}")
     
     new_data = {}
